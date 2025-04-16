@@ -9,11 +9,11 @@ const Sidebar = () => (
       <h2>Menu</h2>
     </div>
 
-    {/* Search Bar */}
+{/*     Search Bar
     <div className="search-bar">
       <input type="text" placeholder="Search..." />
       <FaSearch />
-    </div>
+    </div> */}
 
     {/* Sidebar Links */}
     <div className="sidebar-links">
