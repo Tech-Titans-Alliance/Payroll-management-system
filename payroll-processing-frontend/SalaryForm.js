@@ -2,93 +2,99 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
-
+ 
 const SalaryForm = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    name: '',
-    surname: '',
-    employeeId: '',
+    employeeDetails: '',
+    department: '',
     address: '',
     contact: '',
-    hours: '',
     overtime: '',
     bonus: '',
-    providentFund: '',
-    professionalTax: '',
     loan: '',
     allowance: '',
   });
-
+ 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const hours = parseFloat(form.hours) || 0;
+ 
     const overtime = parseFloat(form.overtime) || 0;
     const bonus = parseFloat(form.bonus) || 0;
     const allowance = parseFloat(form.allowance) || 0;
-
-    const hourlyRate = 100;
+ 
     const overtimeRate = 150;
-
-    const basicPay = hours * hourlyRate;
     const overtimePay = overtime * overtimeRate;
-
-    const grossSalary = basicPay + overtimePay + bonus + allowance;
-
-    const providentFund =
-      form.providentFund !== ''
-        ? parseFloat(form.providentFund)
-        : grossSalary * 0.1;
-
-    const professionalTax =
-      form.professionalTax !== ''
-        ? parseFloat(form.professionalTax)
-        : grossSalary * 0.02;
-
+    const grossSalary = overtimePay + bonus + allowance;
+ 
     const loan = parseFloat(form.loan) || 0;
-
-    const totalDeductions = providentFund + professionalTax + loan;
+    const totalDeductions = loan;
     const netSalary = grossSalary - totalDeductions;
-
+ 
     navigate('/payslip', {
       state: {
         ...form,
-        basicPay,
         overtimePay,
         grossSalary,
-        providentFund,
-        professionalTax,
-        loan,
         totalDeductions,
         netSalary,
       },
     });
   };
-
+ 
   return (
     <div className="container" style={{ display: 'flex' }}>
       <Sidebar />
       <div className="main" style={{ flex: 1, padding: '40px' }}>
         <Header title="Salary Calculation 💼" />
         <form onSubmit={handleSubmit} style={styles.form}>
+          {/* Employee Dropdown */}
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Employee Details</label>
+            <select
+              name="employeeDetails"
+              value={form.employeeDetails}
+              onChange={handleChange}
+              style={styles.input}
+            >
+              <option value="">Select Employee</option>
+              <option value="Asanda Ngwenya">Asanda Ngwenya</option>
+              <option value="Atlegang Semela">Atlegang Semela</option>
+              <option value="Palesa Mashabela">Palesa Mashabela</option>
+              <option value="Rolivhuwa Muzila">Rolivhuwa Muzila</option>
+              <option value="Xolani Vilakazi">Xolani Vilakazi</option>
+              {/* Add more employees here */}
+            </select>
+          </div>
+ 
+          {/* Department Dropdown */}
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>EmployeeType</label>
+            <select
+              name="employeeType"
+              value={form.employeeType}
+              onChange={handleChange}
+              style={styles.input}
+            >
+              <option value="">Select EmployeeType</option>
+              <option value="Intern">Intern</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Full-time">Full-time</option>
+            </select>
+          </div>
+ 
+          {/* Remaining Fields */}
           {[
-            { label: 'Employee Name', name: 'name' },
-            { label: 'Surname', name: 'surname' },
-            { label: 'Employee ID', name: 'employeeId' },
             { label: 'Address', name: 'address' },
             { label: 'Contact', name: 'contact' },
-            { label: 'Hours Worked', name: 'hours' },
             { label: 'Overtime Hours', name: 'overtime' },
             { label: 'Bonus', name: 'bonus' },
-            { label: 'Provident Fund (leave blank = 10%)', name: 'providentFund' },
-            { label: 'Professional Tax (leave blank = 2%)', name: 'professionalTax' },
             { label: 'Loan', name: 'loan' },
-            { label: 'Allowance', name: 'allowance' }
+            { label: 'Allowance', name: 'allowance' },
           ].map(({ label, name }) => (
             <div key={name} style={styles.inputGroup}>
               <label style={styles.label}>{label}</label>
@@ -102,7 +108,7 @@ const SalaryForm = () => {
               />
             </div>
           ))}
-
+ 
           <div style={{ textAlign: 'center', gridColumn: '1 / -1' }}>
             <button type="submit" style={styles.button}>Submit</button>
           </div>
@@ -111,7 +117,7 @@ const SalaryForm = () => {
     </div>
   );
 };
-
+ 
 const styles = {
   form: {
     maxWidth: '700px',
@@ -150,5 +156,5 @@ const styles = {
     fontWeight: 'bold'
   }
 };
-
+ 
 export default SalaryForm;
