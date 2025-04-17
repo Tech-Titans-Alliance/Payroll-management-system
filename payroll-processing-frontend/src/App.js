@@ -9,7 +9,8 @@ import Employees from './pages/Employees';
 import Departments from './pages/Departments';
 import Payroll from './pages/Payroll';
 import Payslips from './pages/Payslips';
-import MonthlyPay from './pages/MonthlyPay';  // Import Monthly Pay page
+import MonthlyPay from './pages/MonthlyPay';
+import History from './pages/history'; // 🔥 Import new History page
 
 function App() {
   return (
@@ -24,12 +25,14 @@ function App() {
         <Route path="/departments" element={<Departments />} />
         <Route path="/payroll" element={<Payroll />} />
         <Route path="/payslips" element={<Payslips />} />
-        <Route path="/monthly-pay" element={<MonthlyPay />} />  {/* Add Monthly Pay route */}
+        <Route path="/monthly-pay" element={<MonthlyPay />} />
+        <Route path="/history" element={<History />} /> {/* 👈 New route for employee history */}
       </Routes>
     </Router>
   );
 }
 
 export default App;
+
 
 
