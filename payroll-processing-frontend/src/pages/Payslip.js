@@ -1,129 +1,120 @@
-// src/pages/Payslip.js
-import React from 'react';
+import React, { useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
+import html2pdf from 'html2pdf.js';
 
 const Payslip = () => {
   const location = useLocation();
   const payslip = location.state || {};
+  const payslipRef = useRef();
+
+  const handleDownload = () => {
+    const element = payslipRef.current;
+    html2pdf().from(element).save('Payslip.pdf');
+  };
+
+  const sectionStyle = {
+    border: '1px solid #999',
+    borderRadius: '8px',
+    padding: '15px',
+    marginBottom: '20px',
+    backgroundColor: '#fdfdfd',
+  };
+
+  const labelStyle = {
+    fontWeight: 'bold',
+    width: '200px',
+    display: 'inline-block',
+  };
 
   return (
-    <div className="container" style={{ display: 'flex', backgroundColor: '#f4f6f8', minHeight: '100vh' }}>
+    <div className="container">
       <Sidebar />
-      <div className="main" style={{ flex: 1, padding: '40px' }}>
-        <Header title="Payslip 🧾" />
-        <div style={styles.card}>
-          <h2 style={styles.heading}>{payslip.companyName || '💼 Company Name'}</h2>
-          <p style={styles.subText}>{payslip.companyAddress || '📍 Company Address'}</p>
+      <div className="main">
+        <Header title="Payslip" />
 
-          <div style={styles.section}>
-            <h3 style={styles.sectionHeading}>👤 Employee Information</h3>
-            <div style={styles.grid}>
-              <div><strong>Name:</strong> {payslip.employeeDetails}</div>
-              <div><strong>Type:</strong> {payslip.employeeType}</div>
-              <div><strong>Address:</strong> {payslip.address}</div>
-              <div><strong>Contact:</strong> {payslip.contact}</div>
-            </div>
+        <div 
+          ref={payslipRef}
+          style={{
+            padding: '30px',
+            border: '2px solid #444',
+            borderRadius: '10px',
+            backgroundColor: '#fff',
+            maxWidth: '800px',
+            margin: '30px auto'
+          }}
+        >
+          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+            <h2 style={{ margin: 0 }}>Tech Titans</h2>
+            <p style={{ margin: 0 }}>19 Ameshoff, Braamfontein</p>
+            <hr style={{ marginTop: '15px' }} />
           </div>
 
-          <div style={styles.section}>
-            <h3 style={styles.sectionHeading}>💵 Earnings</h3>
-            <div style={styles.grid}>
-              <div><strong>Overtime Hours:</strong> {payslip.overtime}</div>
-              <div><strong>Overtime Pay:</strong> R{payslip.overtimePay?.toFixed(2)}</div>
-              <div><strong>Bonus:</strong> R{parseFloat(payslip.bonus || 0).toFixed(2)}</div>
-              <div><strong>Allowance:</strong> R{parseFloat(payslip.allowance || 0).toFixed(2)}</div>
-              <div><strong>Gross Salary:</strong> R{payslip.grossSalary?.toFixed(2)}</div>
-            </div>
+          <div style={sectionStyle}>
+            <h3>Employee Information</h3>
+            <p><span style={labelStyle}>Name:</span> {payslip.employeeDetails}</p>
+            <p><span style={labelStyle}>Employee Type:</span> {payslip.employeeType}</p>
+            <p><span style={labelStyle}>Address:</span> {payslip.address}</p>
+            <p><span style={labelStyle}>Contact:</span> {payslip.contact}</p>
           </div>
 
-          <div style={styles.section}>
-            <h3 style={styles.sectionHeading}>📉 Deductions</h3>
-            <div style={styles.grid}>
-              <div><strong>Loan:</strong> R{parseFloat(payslip.loan || 0).toFixed(2)}</div>
-              <div><strong>Total Deductions:</strong> R{payslip.totalDeductions?.toFixed(2)}</div>
-            </div>
+          <div style={sectionStyle}>
+            <h3>Salary Details</h3>
+            <p><span style={labelStyle}>Overtime Hours:</span> {payslip.overtime}</p>
+            <p><span style={labelStyle}>Overtime Pay:</span> R{payslip.overtimePay}</p>
+            <p><span style={labelStyle}>Bonus:</span> R{payslip.bonus}</p>
+            <p><span style={labelStyle}>Allowance:</span> R{payslip.allowance}</p>
+            <p><span style={labelStyle}>Gross Salary:</span> R{payslip.grossSalary}</p>
           </div>
 
-          <div style={styles.netPayBox}>
-            <h3 style={{ color: '#2e7d32' }}>💰 Net Salary: R{payslip.netSalary?.toFixed(2)}</h3>
+          <div style={sectionStyle}>
+            <h3>Deductions</h3>
+            <p><span style={labelStyle}>Loan:</span> R{payslip.loan}</p>
+            <p><span style={labelStyle}>Total Deductions:</span> R{payslip.totalDeductions}</p>
           </div>
 
-          <div style={styles.signatureSection}>
+          <div style={{ ...sectionStyle, backgroundColor: '#f9f9f9' }}>
+            <h3 style={{ color: '#333' }}>Net Salary</h3>
+            <p><span style={labelStyle}>Net Pay:</span> <strong>R{payslip.netSalary}</strong></p>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '40px' }}>
             <div>
-              <p><strong>📝 Employer Signature</strong></p>
-              <p>(Signature)</p>
+              <p><strong>Employer Signature</strong></p>
+              <p>________________________</p>
             </div>
             <div>
-              <p><strong>🧾 Employee Signature</strong></p>
-              <p>(Signature)</p>
+              <p><strong>Employee Signature</strong></p>
+              <p>________________________</p>
             </div>
           </div>
 
-          <p style={styles.footnote}>📌 This is a system-generated payslip. Please print or save a copy for your records.</p>
+          <p style={{ fontStyle: 'italic', marginTop: '30px', textAlign: 'center' }}>
+            @TechTitans 2025. All rights reserved.
+          </p>
+        </div>
+
+        {/* ✅ Download Button */}
+        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <button 
+            onClick={handleDownload} 
+            style={{
+              padding: '10px 20px',
+              backgroundColor: 'crimson',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '16px'
+            }}
+          >
+            Download Payslip as PDF
+          </button>
         </div>
       </div>
     </div>
   );
-};
-
-const styles = {
-  card: {
-    maxWidth: '900px',
-    margin: 'auto',
-    background: 'linear-gradient(to right, #ffffff, #fafafa)',
-    padding: '30px',
-    borderRadius: '16px',
-    boxShadow: '0 6px 16px rgba(0, 0, 0, 0.1)'
-  },
-  heading: {
-    fontSize: '26px',
-    color: '#c62828',
-    marginBottom: '5px'
-  },
-  subText: {
-    fontSize: '14px',
-    color: '#555',
-    marginBottom: '20px'
-  },
-  section: {
-    marginTop: '25px'
-  },
-  sectionHeading: {
-    fontSize: '18px',
-    color: '#6a1b9a',
-    borderBottom: '2px solid #eee',
-    paddingBottom: '5px',
-    marginBottom: '15px'
-  },
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-    gap: '15px'
-  },
-  netPayBox: {
-    backgroundColor: '#e8f5e9',
-    border: '1px solid #c8e6c9',
-    padding: '15px',
-    marginTop: '30px',
-    borderRadius: '10px',
-    textAlign: 'center'
-  },
-  signatureSection: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginTop: '40px',
-    paddingTop: '10px',
-    borderTop: '1px dashed #ccc'
-  },
-  footnote: {
-    fontStyle: 'italic',
-    fontSize: '13px',
-    color: '#888',
-    textAlign: 'center',
-    marginTop: '20px'
-  }
 };
 
 export default Payslip;
