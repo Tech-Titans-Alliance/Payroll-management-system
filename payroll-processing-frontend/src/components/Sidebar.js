@@ -9,12 +9,6 @@ const Sidebar = () => (
       <h2>Menu</h2>
     </div>
 
-    {/* Search Bar */}
-    <div className="search-bar">
-      <input type="text" placeholder="Search..." />
-      <FaSearch />
-    </div>
-
     {/* Sidebar Links */}
     <div className="sidebar-links">
       <Link to="/dashboard"><FaTachometerAlt /> Dashboard</Link>
