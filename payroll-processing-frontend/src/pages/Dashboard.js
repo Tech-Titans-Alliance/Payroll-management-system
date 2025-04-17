@@ -10,43 +10,36 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="container">
+    <div style={styles.container}>
       <Sidebar />
-      <div className="main">
-        <Header title="Payroll Dashboard" />
-        <p>Welcome to the Payroll Processing System.</p>
+      <div style={styles.main}>
+        <Header title="🚀 Payroll Dashboard" />
+        <p style={styles.welcome}>Welcome back, Shawty! Let’s manage that 💼 payroll like a boss.</p>
 
-        {/* Dashboard Cards Container */}
         <div style={styles.dashboardCards}>
-          {/* Left Column */}
-          <div style={styles.leftColumn}>
-            <Link to="/employees" style={styles.cardLink}>
-              <div style={styles.card}>
-                <h3 style={styles.heading}>👥 Total Employees</h3>
-                <p>{dashboardData.totalEmployees}</p>
-              </div>
-            </Link>
-          </div>
+          <Link to="/employees" style={styles.cardLink}>
+            <div style={{ ...styles.card, background: 'linear-gradient(to right, #e0f7fa, #b2ebf2)' }}>
+              <h3 style={styles.heading}>👥 Total Employees</h3>
+              <p style={styles.value}>{dashboardData.totalEmployees}</p>
+              <p style={styles.subText}>View & manage all employees</p>
+            </div>
+          </Link>
 
-          {/* Right Column */}
-          <div style={styles.rightColumn}>
-            <Link to="/monthly-pay" style={styles.cardLink}>
-              <div style={styles.card}>
-                <h3 style={styles.heading}>💰 Monthly Pay</h3>
-                <p>R{dashboardData.monthlyPay.toLocaleString()}</p>
-              </div>
-            </Link>
-          </div>
+          <Link to="/monthly-pay" style={styles.cardLink}>
+            <div style={{ ...styles.card, background: 'linear-gradient(to right, #fff3e0, #ffe0b2)' }}>
+              <h3 style={styles.heading}>💰 Monthly Pay</h3>
+              <p style={styles.value}>R{dashboardData.monthlyPay.toLocaleString()}</p>
+              <p style={styles.subText}>Total disbursed this month</p>
+            </div>
+          </Link>
 
-          {/* Centered Overview Card */}
-          <div style={styles.centeredCard}>
-            <Link to="/overview" style={styles.cardLink}>
-              <div style={styles.card}>
-                <h3 style={styles.heading}>📊 Overview</h3>
-                <p>View overall system performance and details.</p>
-              </div>
-            </Link>
-          </div>
+          <Link to="/overview" style={styles.cardLink}>
+            <div style={{ ...styles.card, background: 'linear-gradient(to right, #ede7f6, #d1c4e9)' }}>
+              <h3 style={styles.heading}>📊 System Overview</h3>
+              <p style={styles.value}>📈 Real-time insights</p>
+              <p style={styles.subText}>Track performance metrics</p>
+            </div>
+          </Link>
         </div>
       </div>
     </div>
@@ -54,48 +47,50 @@ const Dashboard = () => {
 };
 
 const styles = {
+  container: {
+    display: 'flex',
+    backgroundColor: '#f8f9fa',
+    minHeight: '100vh',
+  },
+  main: {
+    flex: 1,
+    padding: '40px',
+  },
+  welcome: {
+    fontSize: '18px',
+    color: '#444',
+    marginBottom: '30px',
+  },
   dashboardCards: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
     gap: '30px',
-    marginTop: '20px',
-    flexWrap: 'wrap',
-  },
-  leftColumn: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '30px',
-    width: '30%',
-  },
-  rightColumn: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '30px',
-    width: '30%',
-  },
-  centeredCard: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '20px',
   },
   card: {
-    backgroundColor: '#fff',
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    padding: '20px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    padding: '25px',
+    borderRadius: '14px',
+    boxShadow: '0 6px 18px rgba(0,0,0,0.07)',
+    color: '#333',
     textAlign: 'center',
-    minHeight: '170px',
-    cursor: 'pointer',
-    transition: 'transform 0.2s ease',
+    transition: 'box-shadow 0.3s ease, transform 0.3s ease',
   },
   cardLink: {
     textDecoration: 'none',
   },
   heading: {
-    color: 'crimson',
+    fontSize: '20px',
+    marginBottom: '10px',
+    color: '#212121',
+  },
+  value: {
+    fontSize: '26px',
+    fontWeight: 'bold',
+    color: '#2e7d32',
+  },
+  subText: {
+    fontSize: '14px',
+    color: '#666',
+    marginTop: '5px',
   },
 };
 
