@@ -1,14 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link for routing
+import { Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 
 const Dashboard = () => {
   const dashboardData = {
     totalEmployees: 5,
-    departmentCount: 5,
     monthlyPay: 250000,
-    payslipsIssued: 25,
   };
 
   return (
@@ -28,28 +26,14 @@ const Dashboard = () => {
                 <p>{dashboardData.totalEmployees}</p>
               </div>
             </Link>
-
-            <Link to="/departments" style={styles.cardLink}>
-              <div style={styles.card}>
-                <h3 style={styles.heading}>🏢 Departments</h3>
-                <p>{dashboardData.departmentCount}</p>
-              </div>
-            </Link>
           </div>
 
           {/* Right Column */}
           <div style={styles.rightColumn}>
-            <Link to="/monthly-pay" style={styles.cardLink}> {/* Link to Monthly Pay page */}
+            <Link to="/monthly-pay" style={styles.cardLink}>
               <div style={styles.card}>
                 <h3 style={styles.heading}>💰 Monthly Pay</h3>
                 <p>R{dashboardData.monthlyPay.toLocaleString()}</p>
-              </div>
-            </Link>
-
-            <Link to="/payslips" style={styles.cardLink}>
-              <div style={styles.card}>
-                <h3 style={styles.heading}>📄 Payslips Issued</h3>
-                <p>{dashboardData.payslipsIssued}</p>
               </div>
             </Link>
           </div>
@@ -69,7 +53,6 @@ const Dashboard = () => {
   );
 };
 
-// Updated card style to look clickable
 const styles = {
   dashboardCards: {
     display: 'flex',
@@ -105,7 +88,7 @@ const styles = {
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     textAlign: 'center',
     minHeight: '170px',
-    cursor: 'pointer', // makes it clickable
+    cursor: 'pointer',
     transition: 'transform 0.2s ease',
   },
   cardLink: {
@@ -117,5 +100,3 @@ const styles = {
 };
 
 export default Dashboard;
-
-
